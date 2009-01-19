@@ -100,13 +100,6 @@ module Acts
            end
         end
         
-        since_when = lambda do
-          if  self.send("#{when_name}_date?")
-            Date.today - self.send("#{when_name}_date")
-          else
-            "???"
-          end
-        end
         
         define_method("#{when_name}_month?",month_exists)
         define_method("#{when_name}_day?",day_exists)
@@ -116,7 +109,6 @@ module Acts
         define_method("#{when_name}_date",when_method)
         define_method("format_#{when_name}_date",format_when)
         define_method("sentence_#{when_name}_date",sentence_format_when)
-        define_method("since_#{when_name}",since_when)
          class_eval <<-END
 #           include HumanRecord::Acts::Whenish::InstanceMethods    
          END
