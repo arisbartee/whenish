@@ -1,18 +1,15 @@
-require 'test/unit'
-require 'rubygems'
-gem 'activerecord', '>= 2.2.2'
-require 'active_record'
- 
-require "#{File.dirname(__FILE__)}/../init"
-ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :dbfile => ":memory:")
- 
- 
+require 'test_helper'
+ActiveRecord::Base.configurations={'test'=>{adapter:'sqlite3',database:':memory:'}}
+
+
+
 class Person < ActiveRecord::Base
+  attr_accessible :birth_month, :birth_day, :birth_year
   acts_as_whenish :birth
 end
-class ActsAsWhenishTest < Test::Unit::TestCase
+class WhenishTest < ActiveSupport::TestCase
   def setup
-     ActiveRecord::Schema.define(:version => 1) do
+    ActiveRecord::Schema.define(:version => 1) do
       create_table :people do |t|
         t.column :birth_month, :integer
         t.column :birth_day, :integer
@@ -20,7 +17,7 @@ class ActsAsWhenishTest < Test::Unit::TestCase
       end
     end
   end
- 
+
   def teardown
     ActiveRecord::Base.connection.tables.each do |table|
       ActiveRecord::Base.connection.drop_table(table)

@@ -1,0 +1,3 @@
+= Whenish
+
+Rails plugin to handle english language dates
